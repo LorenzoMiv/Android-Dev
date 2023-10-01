@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BusinessCard</string>
+    <string name="name">Lorenzo Murillo IV</string>
+    <string name="description">CSULB Comp Sci</string>
+    <string name="phone">661.607.6389</string>
+    <string name="email">Lorenzo.murillo.iv@gmail.com</string>
+    <string name="github">https://github.com/LorenzoMiv</string>
+    <string name="linkedIn">https://www.linkedin.com/in/lorenzo-murillo-iv-549322b5/</string>
+</resources>
