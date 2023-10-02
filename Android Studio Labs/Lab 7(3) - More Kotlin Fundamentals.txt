@@ -1,0 +1,28 @@
+fun main() {
+    val rockPlanets = arrayOf<String>("Mercury", "Venus", "Earth", "Mars")
+    val gasPlanets = arrayOf("Jupiter", "Saturn", "Uranus", "Neptune")
+    val solarSystem = rockPlanets + gasPlanets
+    val newSolarSystem = mutableListOf("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune")
+	println(solarSystem.size)
+    newSolarSystem.add("Pluto")
+    newSolarSystem.add(3, "Theia")
+    for(planet in newSolarSystem) {
+        println(planet)
+    }
+    println("Future moon" in newSolarSystem) //false
+    val nSolarSystem = mutableSetOf("Mercury", "Venus", "Earth", "Mars")
+    println(nSolarSystem.contains("Pluto")) //false
+    val mapSolarSystem = mutableMapOf(
+        "Mercury" to 0,
+        "Venus" to 0,
+        "Earth" to 1,
+        "Mars" to 2,
+        "Jupiter" to 79,
+        "Saturn" to 82,
+        "Uranus" to 27,
+        "Neptune" to 14
+    )
+    println(mapSolarSystem["Pluto"])      //null
+    println(mapSolarSystem.get("Theia"))  //null
+    
+}
