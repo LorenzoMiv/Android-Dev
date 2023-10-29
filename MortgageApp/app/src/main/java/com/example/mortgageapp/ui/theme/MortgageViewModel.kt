@@ -2,7 +2,6 @@ package com.example.mortgageapp.ui.theme
 
 import androidx.lifecycle.ViewModel
 import com.example.mortgageapp.data.MortgageUiState
-import com.example.mortgageapp.data.YearEnum
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,13 +11,13 @@ class MortgageViewModel : ViewModel(){
     private val _uiState = MutableStateFlow(MortgageUiState())
     val uiState: StateFlow<MortgageUiState> = _uiState.asStateFlow()
 
-    fun setAmount(amount: Int, apr: Double){
+    fun setAmount(amount: Int, apr: Double, year: Int){
         _uiState.update { currentState ->
             currentState.copy(
                 amount = amount,
                 apr = apr,
-                year = YearEnum.THIRTYYEARS.years,
-                monthlyPayment = calculateMonthly(apr, years = YearEnum.THIRTYYEARS.years),
+                year = year,
+                monthlyPayment = calculateMonthly(apr, years = year),
                 totalPayment = calculateTotal(),
             )
         }

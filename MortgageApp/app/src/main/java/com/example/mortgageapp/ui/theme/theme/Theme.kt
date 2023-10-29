@@ -1,4 +1,4 @@
-package com.example.mortgageapp.ui.theme
+package com.example.mortgageapp.ui.theme.theme
 
 import android.app.Activity
 import android.os.Build

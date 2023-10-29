@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MortgageApp</string>
+    <string name="year">Year</string>
+    <string name="apr">Interest Rate</string>
+    <string name="loan_amount">Loan Amount</string>
+    <string name="done">Done</string>
 </resources>
