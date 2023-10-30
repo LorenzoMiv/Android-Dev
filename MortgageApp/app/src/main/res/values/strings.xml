@@ -4,4 +4,7 @@
     <string name="apr">Interest Rate</string>
     <string name="loan_amount">Loan Amount</string>
     <string name="done">Done</string>
+    <string name="monthly_payment">Monthly Payment</string>
+    <string name="total_payment">Total Payment</string>
+    <string name="modify_data">Modify Data</string>
 </resources>
