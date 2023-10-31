@@ -35,9 +35,12 @@ fun MortgageApp(
     {
         composable(route = MortgageScreen.MortgageDisplayScreen.name){
             MortgageDisplayScreen(
+                years = listOf(uiState.year),
+                amount = uiState.amount,
+                apr = uiState.apr,
                 onClickModifyScreen = {
                     navController.navigate(MortgageScreen.ModifyScreen.name)
-                }
+                },
             )
 
         }

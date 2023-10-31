@@ -1,6 +1,7 @@
 package com.example.mortgageapp.ui.theme
 
 import android.provider.ContactsContract.Data
+import android.provider.MediaStore.Audio.Radio
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,10 +26,14 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mortgage.R
 import com.example.mortgageapp.data.DataSource
+import com.example.mortgageapp.data.MortgageUiState
+import kotlinx.coroutines.selects.select
+import com.example.mortgageapp.ui.theme.MortgageViewModel
 
 
 @Composable
@@ -36,60 +41,43 @@ fun ModifyScreen(
     years: List<Int>,
     amount: Double,
     apr: Double,
+    //this should probably save all the data not just a double
     onDoneClick: (Double) -> Unit = {},
     onSelectionChanged: (Int) -> Unit = {},
     modifier: Modifier = Modifier,
 ){
     val resources = LocalContext.current.resources
-
     //val items = listOf(
     //    Pair(stringResource(R.string.year), years),
     //    Pair(stringResource(R.string.amount), amount),
     //    Pair(stringResource(R.string.apr), apr),
     //)
-    var selectedValue by rememberSaveable {
-        mutableIntStateOf(0)
+    var amountValue by rememberSaveable {
+        mutableStateOf("")
     }
+
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxHeight()
     ){
-        DataSource.years.forEach {
-            year -> Row(
-            modifier = Modifier
-                .selectable(
-                    selected = selectedValue == year,
-                    onClick = {
-                        selectedValue = year
-                        onSelectionChanged(year)
-                    }
-                ),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            RadioButton(
-                selected = selectedValue == year,
-                onClick = {
-                    selectedValue = year
-                    onSelectionChanged(year)
-                }
-            )
-            Text(years.toString())
-        }
-        }
-
-        //TextField(
-        //    value = years.toString(),
-        //    onValueChange = {},
-        //    label = { Text(text = stringResource(R.string.year))},
-        //    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        //    modifier = Modifier
-        //        .fillMaxWidth()
-        //)
+       //Row (
+       //    modifier = Modifier,
+       //    horizontalArrangement = Arrangement.SpaceEvenly
+       //){
+       //    Text(
+       //        text = "Years",
+       //        textAlign = TextAlign.Start
+       //    )
+       //    RadioButton(selected = selectedValue == years[0],
+       //        onClick = {  })
+       //    }
         TextField(
-            value = amount.toString(),
-            onValueChange = {},
+            value = amountValue,
+            //idk how to call the setAmount function here...
+            onValueChange = {amountValue = it
+                            },
             label = { Text(stringResource(R.string.loan_amount))},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier
@@ -115,6 +103,9 @@ fun ModifyScreen(
         }
 
     }
+
+
+
 }
 
 

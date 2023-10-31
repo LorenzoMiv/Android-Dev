@@ -14,40 +14,39 @@ class MortgageViewModel : ViewModel(){
     fun setAmount(
         amount: Double
     ){
+        uiState.value.amount = amount
         _uiState.update { currentState ->
             currentState.copy(
-                amount = amount,
-                //apr = _uiState.value.apr,
-                //year = _uiState.value.year,
-                //monthlyPayment = calculateMonthly(amount, _uiState.value.apr, _uiState.value.year),
+                amount = uiState.value.amount,
+                apr = uiState.value.apr,
+                year = uiState.value.year,
+                monthlyPayment = calculateMonthly(uiState.value.amount, uiState.value.apr, uiState.value.year),
                 totalPayment = calculateTotal(),
             )
         }
     }
 
     fun setApr(
-        apr: Double,
     ){
         _uiState.update { currentState ->
             currentState.copy(
-                amount = _uiState.value.amount,
-                apr = apr,
-                year = _uiState.value.year,
-                monthlyPayment = calculateMonthly(_uiState.value.amount, apr, _uiState.value.year),
+                amount = uiState.value.amount,
+                apr = uiState.value.apr,
+                year = uiState.value.year,
+                monthlyPayment = calculateMonthly(uiState.value.amount, uiState.value.apr, uiState.value.year),
                 totalPayment = calculateTotal()
             )
         }
     }
 
     fun setYears(
-        year: Int,
     ) {
         _uiState.update { currentState ->
             currentState.copy(
-                amount = _uiState.value.amount,
-                apr = _uiState.value.apr,
-                year = year,
-                monthlyPayment = calculateMonthly(_uiState.value.amount, _uiState.value.apr, year),
+                amount = uiState.value.amount,
+                apr = uiState.value.apr,
+                year = uiState.value.year,
+                monthlyPayment = calculateMonthly(uiState.value.amount, uiState.value.apr, uiState.value.year),
                 totalPayment = calculateTotal()
             )
         }
@@ -66,8 +65,8 @@ class MortgageViewModel : ViewModel(){
 
     private fun calculateTotal(
     ): Double {
-        val years = _uiState.value.year
-        val monthlyPayment = _uiState.value.monthlyPayment
+        val years = uiState.value.year
+        val monthlyPayment = uiState.value.monthlyPayment
         return monthlyPayment * years * 12
     }
 }
