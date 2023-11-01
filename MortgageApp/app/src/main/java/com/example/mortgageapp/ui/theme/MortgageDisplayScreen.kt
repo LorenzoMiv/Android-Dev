@@ -57,7 +57,7 @@ fun MortgageDisplayScreen(
                 textAlign = TextAlign.Start
             )
             Text(
-                text = "",
+                text = amount.toString(),
                 textAlign = TextAlign.End
             )
 
