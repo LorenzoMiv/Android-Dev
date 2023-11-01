@@ -17,10 +17,10 @@ class MortgageViewModel : ViewModel(){
         uiState.value.amount = amount
         _uiState.update { currentState ->
             currentState.copy(
-                amount = uiState.value.amount,
-                apr = uiState.value.apr,
-                year = uiState.value.year,
-                monthlyPayment = calculateMonthly(uiState.value.amount, uiState.value.apr, uiState.value.year),
+                amount = amount,
+                apr = _uiState.value.apr,
+                year = _uiState.value.year,
+                monthlyPayment = calculateMonthly(amount, _uiState.value.apr, _uiState.value.year),
                 totalPayment = calculateTotal(),
             )
         }
