@@ -53,7 +53,7 @@ fun ModifyScreen(
     //    Pair(stringResource(R.string.apr), apr),
     //)
     var amountValue by rememberSaveable {
-        mutableStateOf("")
+        mutableStateOf(amount.toString())
     }
 
     Column (
@@ -92,7 +92,7 @@ fun ModifyScreen(
                 .fillMaxWidth()
         )
         TextButton(
-            onClick = { onDoneClick(amount) },
+            onClick = { onDoneClick(amountValue.toDouble()) },
             shape = RectangleShape,
             modifier = Modifier
                 .padding(32.dp)
