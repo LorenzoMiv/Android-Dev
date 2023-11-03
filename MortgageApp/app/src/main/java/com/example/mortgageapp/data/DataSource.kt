@@ -1,9 +1,13 @@
 package com.example.mortgageapp.data
 
-object DataSource{
-    val years = listOf(
-        10,
-        15,
-        30
-    )
+enum class MortgageTerms(val years: Int){
+    TEN(10),
+    FIFTEEN(15),
+    THIRTY(30),
 }
+
+@JvmInline
+value class Money(val value: String)
+
+@JvmInline
+value class Apr(val value: String)

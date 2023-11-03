@@ -1,99 +1,103 @@
 package com.example.mortgageapp.ui.theme
 
-import android.provider.ContactsContract.Data
-import android.provider.MediaStore.Audio.Radio
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mortgage.R
-import com.example.mortgageapp.data.DataSource
-import com.example.mortgageapp.data.MortgageUiState
-import kotlinx.coroutines.selects.select
-import com.example.mortgageapp.ui.theme.MortgageViewModel
+import com.example.mortgageapp.data.Apr
+import com.example.mortgageapp.data.Money
+import com.example.mortgageapp.data.MortgageTerms
 
 
 @Composable
 fun ModifyScreen(
-    years: List<Int>,
+    mortgageTerm: MortgageTerms,
     amount: Double,
     apr: Double,
-    //this should probably save all the data not just a double
-    onDoneClick: (Double) -> Unit = {},
-    onSelectionChanged: (Int) -> Unit = {},
+    onDoneClick: (MortgageTerms, Money, Apr) -> Unit,
     modifier: Modifier = Modifier,
 ){
-    val resources = LocalContext.current.resources
-    //val items = listOf(
-    //    Pair(stringResource(R.string.year), years),
-    //    Pair(stringResource(R.string.amount), amount),
-    //    Pair(stringResource(R.string.apr), apr),
-    //)
+    var termValue by rememberSaveable {
+        mutableStateOf(mortgageTerm)
+    }
     var amountValue by rememberSaveable {
         mutableStateOf(amount.toString())
     }
+    var aprValue by rememberSaveable {
+        mutableStateOf(apr.toString())
+    }
 
     Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxHeight()
     ){
-       //Row (
-       //    modifier = Modifier,
-       //    horizontalArrangement = Arrangement.SpaceEvenly
-       //){
-       //    Text(
-       //        text = "Years",
-       //        textAlign = TextAlign.Start
-       //    )
-       //    RadioButton(selected = selectedValue == years[0],
-       //        onClick = {  })
-       //    }
+        Row(
+            horizontalArrangement = SpaceBetween,
+            //verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .selectableGroup()
+                .fillMaxWidth()
+        ) {
+            Text(text = stringResource(R.string.year))
+            MortgageTerms.values().forEach{
+                Column ()
+                {
+                    val selected = it == termValue
+                    val onClick = {termValue = it}
+                    RadioButton(selected, onClick)
+                    Text(text = it.years.toString())
+                }
+            }
+        }
         TextField(
-            value = amountValue,
-            //idk how to call the setAmount function here...
-            onValueChange = {amountValue = it
-                            },
-            label = { Text(stringResource(R.string.loan_amount))},
+            value = "$$amountValue",
+            onValueChange = {amountValue = it },
+            label = { Text( stringResource(R.string.loan_amount))},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier
                 .fillMaxWidth()
         )
         TextField(
-            value = apr.toString(),
-            onValueChange = {},
+            value = "$aprValue%",
+            onValueChange = { aprValue = it},
             label = { Text(stringResource(R.string.apr))},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
             modifier = Modifier
                 .fillMaxWidth()
         )
-        TextButton(
-            onClick = { onDoneClick(amountValue.toDouble()) },
+        OutlinedButton(
+            onClick = { onDoneClick(termValue, Money(amountValue), Apr(aprValue)) },
             shape = RectangleShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Gray,
+                contentColor = Color.Black
+            ),
             modifier = Modifier
                 .padding(32.dp)
 
@@ -101,21 +105,5 @@ fun ModifyScreen(
         ) {
             Text(text = stringResource(R.string.done))
         }
-
     }
-
-
-
 }
-
-
-@Preview
-@Composable
-fun ModScreenPreview(){
-    ModifyScreen(
-        years = listOf(10, 15, 30),
-        amount = 100000.0,
-        apr = 3.5,
-    )
-}
-

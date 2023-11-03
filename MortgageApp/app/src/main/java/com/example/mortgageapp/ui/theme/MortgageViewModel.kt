@@ -1,6 +1,7 @@
 package com.example.mortgageapp.ui.theme
 
 import androidx.lifecycle.ViewModel
+import com.example.mortgageapp.data.MortgageTerms
 import com.example.mortgageapp.data.MortgageUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,59 +15,30 @@ class MortgageViewModel : ViewModel(){
     fun setAmount(
         amount: Double
     ){
-        uiState.value.amount = amount
         _uiState.update { currentState ->
             currentState.copy(
                 amount = amount,
-                apr = _uiState.value.apr,
-                year = _uiState.value.year,
-                monthlyPayment = calculateMonthly(amount, _uiState.value.apr, _uiState.value.year),
-                totalPayment = calculateTotal(),
             )
         }
     }
 
     fun setApr(
+        apr: Double
     ){
         _uiState.update { currentState ->
             currentState.copy(
-                amount = uiState.value.amount,
-                apr = uiState.value.apr,
-                year = uiState.value.year,
-                monthlyPayment = calculateMonthly(uiState.value.amount, uiState.value.apr, uiState.value.year),
-                totalPayment = calculateTotal()
+                apr = apr,
             )
         }
     }
 
     fun setYears(
+        year: MortgageTerms
     ) {
         _uiState.update { currentState ->
             currentState.copy(
-                amount = uiState.value.amount,
-                apr = uiState.value.apr,
-                year = uiState.value.year,
-                monthlyPayment = calculateMonthly(uiState.value.amount, uiState.value.apr, uiState.value.year),
-                totalPayment = calculateTotal()
+                year = year
             )
         }
-    }
-
-    private fun calculateMonthly(
-        amount: Double,
-        apr: Double,
-        years: Int
-    ): Double {
-        val monthlyAmount = amount / years
-        val mRate = apr / 12
-        val temp = Math.pow((1 / (1 + mRate)), (years * 12).toDouble())
-        return monthlyAmount * mRate / (1 - temp).toFloat()
-    }
-
-    private fun calculateTotal(
-    ): Double {
-        val years = uiState.value.year
-        val monthlyPayment = uiState.value.monthlyPayment
-        return monthlyPayment * years * 12
     }
 }

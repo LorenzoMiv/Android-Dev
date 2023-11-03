@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mortgageapp.data.MortgageTerms
 import com.example.mortgageapp.ui.theme.ModifyScreen
 import com.example.mortgageapp.ui.theme.MortgageDisplayScreen
 import com.example.mortgageapp.ui.theme.MortgageViewModel
@@ -35,22 +36,27 @@ fun MortgageApp(
     {
         composable(route = MortgageScreen.MortgageDisplayScreen.name){
             MortgageDisplayScreen(
-                years = listOf(uiState.year),
+                mortgageTerm = uiState.year,
                 amount = uiState.amount,
                 apr = uiState.apr,
                 onClickModifyScreen = {
                     navController.navigate(MortgageScreen.ModifyScreen.name)
                 },
+                monthlyPayment = uiState.monthlyPayment,
+                totalPayment = uiState.totalPayment,
             )
 
         }
         composable(route = MortgageScreen.ModifyScreen.name){
             ModifyScreen(
-                years = listOf(uiState.year),
+                mortgageTerm = uiState.year,
                 amount = uiState.amount,
                 apr = uiState.apr,
                 onDoneClick = {
-                    viewModel.setAmount(it)
+                    mortgageTerms, money, apr ->
+                    viewModel.setYears(mortgageTerms)
+                    viewModel.setAmount(money.value.toDouble())
+                    viewModel.setApr(apr.value.toDouble())
                     navController.navigate(MortgageScreen.MortgageDisplayScreen.name)
                 }
             )
