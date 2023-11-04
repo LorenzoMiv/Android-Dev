@@ -7,4 +7,5 @@
     <string name="monthly_payment">Monthly Payment: </string>
     <string name="total_payment">Total Payment: </string>
     <string name="modify_data">Modify Data</string>
+    <string name="mortgage_info">Mortgage Info</string>
 </resources>
