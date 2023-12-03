@@ -32,5 +32,6 @@ interface ItemsRepository{
 
     suspend fun updateItem(item: Item)
 
+    suspend fun getItemByName(name: String): List<Item>
 
 }
